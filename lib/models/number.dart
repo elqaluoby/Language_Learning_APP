@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:toku_app/services/progress_controller.dart';
 
 class Itemmodel {
   final String sound;
@@ -8,13 +9,14 @@ class Itemmodel {
 
   const Itemmodel({
     required this.sound,
-     this.image,
+    this.image,
     required this.jpName,
     required this.enName,
   });
 
-  playsound() {
+  Future<void> playsound() async {
     final player = AudioPlayer();
-     player.play(AssetSource(sound));
+    await player.play(AssetSource(sound));
+    ProgressController.instance.markSoundCompleted(sound);
   }
 }

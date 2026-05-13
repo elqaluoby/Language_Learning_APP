@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:toku_app/models/number.dart';
 
@@ -37,7 +36,7 @@ class ItemInfo extends StatelessWidget {
         const Spacer(flex: 1),
         IconButton(
           onPressed: () async {
-            item.playsound();
+            await item.playsound();
           },
           icon: const Icon(
             Icons.play_arrow,
