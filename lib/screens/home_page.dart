@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:toku_app/components/category_item.dart';
 import 'package:toku_app/screens/colors_page.dart';
 import 'package:toku_app/screens/family_members_page.dart';
-import 'package:toku_app/screens/Numbers_Page.dart';
-import 'package:toku_app/screens/phrses_page.dart';
+import 'package:toku_app/screens/numbers_page.dart';
+import 'package:toku_app/screens/phrases_page.dart';
 import 'package:toku_app/services/progress_controller.dart';
+import 'package:toku_app/services/theme_controller.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,15 +13,37 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
       appBar: AppBar(
-        backgroundColor: const Color(0xff46322B),
+        toolbarHeight: 70,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(15),
+          ),
+        ),
         title: const Text(
-          'Toku',
+          'Home',
           style: TextStyle(
             color: Colors.white,
           ),
         ),
+        actions: [
+          AnimatedBuilder(
+            animation: ThemeController.instance,
+            builder: (context, child) {
+              final isDarkMode = ThemeController.instance.isDarkMode;
+
+              return IconButton(
+                tooltip: isDarkMode ? 'Light mode' : 'Dark mode',
+                onPressed: ThemeController.instance.toggleTheme,
+                icon: Icon(
+                  size: 35,
+                  isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                  color: Colors.white,
+                ),
+              );
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -38,9 +61,10 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            text: 'Numbers',
+            text: '数字 Sūji \n (Numbers)',
             color: const Color(0xffEF9235),
             soundCount: 10,
+            image: 'assets/images/home/numbers_cover.jpg',
           ),
           Category(
             onTap: () {
@@ -53,9 +77,10 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            text: 'Family members',
+            text: '家族 Kazoku \n (Family Members)',
             color: const Color(0xff5D8B3C),
             soundCount: 10,
+            image: 'assets/images/home/family_members_cover.jpg',
           ),
           Category(
             onTap: () {
@@ -68,9 +93,10 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            text: 'Colors',
+            text: '色 Iro \n (Colors)',
             color: const Color(0xff854DAC),
             soundCount: 8,
+            image: 'assets/images/home/colors_cover.jpg',
           ),
           Category(
             onTap: () {
@@ -83,9 +109,10 @@ class HomePage extends StatelessWidget {
                 ),
               );
             },
-            text: 'Phrases',
-            color: const Color(0xFF51B0D5),
+            text: 'フレーズ Furēzu \n (Phrases)',
+            color: const Color(0xFF3586A6),
             soundCount: 9,
+            image: 'assets/images/home/phrases_cover.jpg',
           ),
         ],
       ),
@@ -98,24 +125,27 @@ class CourseContentHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(18, 14, 18, 6),
       child: Row(
         children: [
-          const Text(
+          Text(
             'Course Content',
             style: TextStyle(
-              color: Color(0xff46322B),
+              color: isDarkMode ? Colors.white : const Color(0xffE75E34),
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: 10),
           Expanded(
             child: Container(
-              height: 1,
+              height: 2,
               decoration: BoxDecoration(
-                color: const Color(0xff46322B).withOpacity(0.16),
+                color: (isDarkMode ? Colors.white : const Color(0xffE75E34))
+                    .withOpacity(0.4),
                 borderRadius: BorderRadius.circular(999),
               ),
             ),
@@ -138,62 +168,79 @@ class ProgressSection extends StatelessWidget {
       builder: (context, child) {
         return Container(
           margin: const EdgeInsets.all(8),
-          padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
-            color: const Color(0xFFFFA657),
+            color: const Color(0xFFFFFFFF),
             borderRadius: BorderRadius.circular(18),
           ),
+          clipBehavior: Clip.antiAlias,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Progress',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    '${progressController.percent}%',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Text(
-                '${progressController.completedSounds} of ${ProgressController.totalSounds} sounds completed',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
+              SizedBox(
+                height: 145,
+                width: double.infinity,
+                child: Image.asset(
+                  'assets/images/home/temple.jpg',
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
                 ),
               ),
-              const SizedBox(height: 14),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(999),
-                child: TweenAnimationBuilder<double>(
-                  tween: Tween<double>(
-                    end: progressController.progress,
-                  ),
-                  duration: const Duration(milliseconds: 450),
-                  curve: Curves.easeOutCubic,
-                  builder: (context, value, child) {
-                    return LinearProgressIndicator(
-                      value: value,
-                      minHeight: 12,
-                      backgroundColor: Colors.white.withOpacity(0.35),
-                      valueColor: const AlwaysStoppedAnimation<Color>(
-                        Colors.white,
+              Padding(
+                padding: const EdgeInsets.all(18),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Progress',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${progressController.percent}%',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      '${progressController.completedSounds} of ${ProgressController.totalSounds} sounds completed',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
                       ),
-                    );
-                  },
+                    ),
+                    const SizedBox(height: 14),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(999),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(
+                          end: progressController.progress,
+                        ),
+                        duration: const Duration(milliseconds: 450),
+                        curve: Curves.easeOutCubic,
+                        builder: (context, value, child) {
+                          return LinearProgressIndicator(
+                            value: value,
+                            minHeight: 12,
+                            backgroundColor: Colors.black.withOpacity(0.12),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color(0xFFE75E34),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

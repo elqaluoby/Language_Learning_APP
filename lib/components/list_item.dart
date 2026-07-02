@@ -12,12 +12,25 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 100,
-      color: color,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
       child: Row(
         children: [
           if (item.image != null)
             Container(
-              color: const Color(0xffFFF6DC),
+              width: 100,
+              height: 100,
+              color: const Color(0xFFFFFFFF),
               child: Image.asset(item.image!),
             ),
           Expanded(

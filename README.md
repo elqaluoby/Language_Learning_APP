@@ -1,16 +1,57 @@
-# toku_app
+# Toku App
 
-A new Flutter project.
+A Flutter language-learning app for practicing beginner Japanese vocabulary with images and audio pronunciation.
+
+## Features
+
+- Learn numbers, family members, colors, and common phrases.
+- Play pronunciation audio for each vocabulary item.
+- Track progress across the full set of sounds.
+- Switch between light and dark themes.
+- Start with a multi-screen visual splash experience.
+
+## Screenshots
+
+| Light | Dark |
+| --- | --- |
+| ![Home light](<Screenshots/light/home light.svg>) | ![Home dark](<Screenshots/dark/home dark.svg>) |
+
+## Tech Stack
+
+- Flutter
+- Dart
+- Material UI
+- `audioplayers` for sound playback
+
+## Project Structure
+
+```text
+lib/
+  components/   Reusable UI widgets
+  models/       Vocabulary item model
+  screens/      App pages and splash screens
+  services/     Theme and progress controllers
+assets/
+  images/       Category, item, and splash images
+  sounds/       Vocabulary pronunciation files
+```
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Make sure Flutter is installed, then run:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+flutter run
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+To check the project:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter analyze
+flutter test
+```
+
+## Assets
+
+The app uses local image and audio assets declared in `pubspec.yaml`, including vocabulary illustrations, home category covers, splash images, and pronunciation files.

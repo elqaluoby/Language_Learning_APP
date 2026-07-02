@@ -10,30 +10,37 @@ class ItemInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.jpName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15, right: 8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.jpName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                item.enName,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
+                const SizedBox(height: 2),
+                Text(
+                  item.enName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-        const Spacer(flex: 1),
         IconButton(
           onPressed: () async {
             await item.playsound();

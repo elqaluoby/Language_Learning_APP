@@ -60,7 +60,6 @@ class ColorsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff46322B),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -77,14 +76,26 @@ class ColorsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: numbers.length,
-        itemBuilder: (context, index) {
-          return ListItem(
-            item: numbers[index],
-            color: const Color(0xff854DAC),
-          );
-        },
+      body: Scrollbar(
+        thumbVisibility: true,
+        trackVisibility: true,
+        interactive: true,
+        thickness: 6,
+        radius: const Radius.circular(999),
+        child: ListView.separated(
+          primary: true,
+          padding: const EdgeInsets.all(10),
+          itemCount: numbers.length,
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 8);
+          },
+          itemBuilder: (context, index) {
+            return ListItem(
+              item: numbers[index],
+              color: const Color(0xff854DAC),
+            );
+          },
+        ),
       ),
     );
   }

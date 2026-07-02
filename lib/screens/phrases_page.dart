@@ -33,12 +33,12 @@ class PhrasesPage extends StatelessWidget {
     ),
     Itemmodel(
       sound: 'sounds/phrases/programming_is_easy.wav',
-      jpName: 'Puroguramingu \n wa taisetsu desu',
+      jpName: 'Puroguramingu wa taisetsu desu',
       enName: 'Programming is easy',
     ),
     Itemmodel(
       sound: 'sounds/phrases/what_is_your_name.wav',
-      jpName: 'Anata no namae \n wa nan desu ka?',
+      jpName: 'Anata no namae wa nan desu ka?',
       enName: 'What is your name?',
     ),
     Itemmodel(
@@ -57,7 +57,6 @@ class PhrasesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff46322B),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -74,14 +73,26 @@ class PhrasesPage extends StatelessWidget {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: numbers.length,
-        itemBuilder: (context, index) {
-          return PhrasesItem(
-            item: numbers[index],
-            color: const Color(0xFF51B0D5),
-          );
-        },
+      body: Scrollbar(
+        thumbVisibility: true,
+        trackVisibility: true,
+        interactive: true,
+        thickness: 6,
+        radius: const Radius.circular(999),
+        child: ListView.separated(
+          primary: true,
+          padding: const EdgeInsets.all(10),
+          itemCount: numbers.length,
+          separatorBuilder: (context, index) {
+            return const SizedBox(height: 8);
+          },
+          itemBuilder: (context, index) {
+            return PhrasesItem(
+              item: numbers[index],
+              color: const Color(0xFF3586A6),
+            );
+          },
+        ),
       ),
     );
   }
